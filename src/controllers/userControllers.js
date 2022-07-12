@@ -4,7 +4,7 @@ const {
   getUsers,
   getUserById,
   login,
-  signup,
+  deleteUser,
 } = require("../services/userService");
 const AppError = require("../utils/custom-app-error");
 const generateToken = require("../utils/generateJwt");
@@ -24,6 +24,22 @@ const update = async (req, res, next) => {
     const payload = req.body;
     const { id } = req.params;
     await updateUser(id, payload);
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!id) throw new AppError("invalid id", 400);
+
+    if (id === req.userId)
+      throw new AppError("cannot delete current user", 400);
+
+    await deleteUser(id);
+
     res.sendStatus(200);
   } catch (error) {
     next(error);
@@ -72,4 +88,12 @@ const signupUser = async (req, res, next) => {
   }
 };
 
-module.exports = { create, update, get, getById, loginUser, signupUser };
+module.exports = {
+  create,
+  update,
+  deleteById,
+  get,
+  getById,
+  loginUser,
+  signupUser,
+};

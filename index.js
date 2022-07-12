@@ -12,8 +12,8 @@ dbConfigs.connectToDB();
 app.use(express.json());
 
 // routes
-const apiBaseUrl = appConstants.API_BASE_URL;
-app.use(`${apiBaseUrl}/users`, routes.userRoutes);
+app.use(appConstants.USERS_BASE_URL, routes.userRoutes);
+app.use(appConstants.TASKS_BASE_URL, routes.taskRoutes);
 
 // error handler
 app.use((error, req, res, next) => {

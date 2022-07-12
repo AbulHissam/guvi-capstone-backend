@@ -32,7 +32,6 @@ const createUser = async (payload) => {
 
 const updateUser = async (userId, payload) => {
   const user = await User.findById(userId);
-
   if (!user) throw new AppError("invalid user id", 400);
 
   // const roles = user.roles.filter((role) => {
@@ -47,6 +46,10 @@ const updateUser = async (userId, payload) => {
   await User.findByIdAndUpdate(userId, payload);
 
   // return updatedUser;
+};
+
+const deleteUser = async (userId) => {
+  await Task.findByIdAndDelete(userId);
 };
 
 const getUsers = async () => {
@@ -83,6 +86,7 @@ const login = async (payload) => {
 module.exports = {
   createUser,
   updateUser,
+  deleteUser,
   getUsers,
   getUserById,
   login,

@@ -2,6 +2,7 @@ const express = require("express");
 const {
   create,
   update,
+  deleteById,
   get,
   getById,
   loginUser,
@@ -18,6 +19,7 @@ router.route("/:id").get(isAuthorized, getById);
 
 router.route("/").post(requiresAdminRole, create);
 router.route("/:id").put(requiresAdminRole, update);
+router.route("/:id").delete(requiresAdminRole, deleteById);
 
 router.route("/login").post(loginUser);
 router.route("/signup").post(signupUser);
